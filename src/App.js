@@ -10,16 +10,57 @@ function App() {
   const palindromeTrueMessage = "Yay! Your birthday is a palindrome date.";
   const palindromeFalseMessage = "Nay! Your birthday is not a palindrome date.";
 
-  function updatingInputData(event) {
-    let inputValue = event.target.value;
-    inputValue = inputValue.replaceAll("-", "");
-    setDateOfBirth(inputValue);
+  let fullDate = {
+    date: 0,
+    month: 0,
+    year: 0,
+  };
+
+  function clickHandler() {
+    let dateOfBirthList = dateOfBirth.split("-");
+    fullDate.date = dateOfBirthList[2];
+    fullDate.month = dateOfBirthList[1];
+    fullDate.year = dateOfBirthList[0];
+    allDateFormats(fullDate);
   }
 
-  function palindromeCheck() {
-    let uNODateOfBirth = dateOfBirth.split("").reverse().join("");
-    if (dateOfBirth === "") {
-    } else if (dateOfBirth === uNODateOfBirth) {
+  function allDateFormats(fullDate) {
+    let mmddyyyyFullDateString = fullDate.month + fullDate.date + fullDate.year;
+    let mmddyyFullDateString =
+      fullDate.month + fullDate.date + fullDate.year.slice(2, 4);
+    let ddmmyyFullDateString =
+      fullDate.date + fullDate.month + fullDate.year.slice(2, 4);
+    let ddmmyyyyFullDateString = fullDate.date + fullDate.month + fullDate.year;
+    let yyyymmddFullDateString = fullDate.year + fullDate.month + fullDate.date;
+    let yymmddFullDateString =
+      fullDate.year.slice(2, 4) + fullDate.month + fullDate.date;
+    allFormatPalindromeCheck([
+      mmddyyyyFullDateString,
+      mmddyyFullDateString,
+      ddmmyyFullDateString,
+      ddmmyyyyFullDateString,
+      yyyymmddFullDateString,
+      yymmddFullDateString,
+    ]);
+  }
+
+  function unoReverseMaker(normalString) {
+    let unoString = normalString.split("").reverse().join("");
+    return unoString;
+  }
+
+  function allFormatPalindromeCheck(allDateFormats) {
+    let isPalindrome = false;
+    allDateFormats.forEach((format) => {
+      console.log(format);
+      console.log(unoReverseMaker(format));
+      if (format === unoReverseMaker(format)) {
+        isPalindrome = true;
+        console.log(isPalindrome, "if");
+      }
+    });
+
+    if (isPalindrome === true) {
       setOutputMessage(palindromeTrueMessage);
     } else {
       setOutputMessage(palindromeFalseMessage);
@@ -35,13 +76,15 @@ function App() {
         <div className="input-div">
           <label htmlFor="dob">Enter your date of birth:</label>
           <input
-            onChange={(event) => updatingInputData(event)}
             type="date"
             name="dob"
             id="dob"
+            onChange={(event) => {
+              setDateOfBirth(event.target.value);
+            }}
           />
         </div>
-        <button onClick={palindromeCheck}>Check</button>
+        <button onClick={clickHandler}>Check</button>
         <div className="output-div">{outputMessage}</div>
       </main>
       <footer>
