@@ -7,6 +7,7 @@ function App() {
     "Fill in the form and press the button to continue."
   );
 
+  const errorMessage = "You need to enter a date first to continue.";
   const palindromeTrueMessage = "Yay! Your birthday is a palindrome date.";
   const palindromeFalseMessage = "Nay! Your birthday is not a palindrome date.";
 
