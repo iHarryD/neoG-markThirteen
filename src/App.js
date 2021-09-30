@@ -21,27 +21,35 @@ function App() {
     fullDate.date = dateOfBirthList[2];
     fullDate.month = dateOfBirthList[1];
     fullDate.year = dateOfBirthList[0];
-    allDateFormats(fullDate);
+    if (dateOfBirth === "") {
+      setOutputMessage(errorMessage);
+    } else {
+      if (allFormatPalindromeCheck(allDateFormats(fullDate))) {
+        setOutputMessage(palindromeTrueMessage);
+      } else {
+        setOutputMessage(palindromeFalseMessage);
+      }
+    }
   }
 
   function allDateFormats(fullDate) {
     let mmddyyyyFullDateString = fullDate.month + fullDate.date + fullDate.year;
     let mmddyyFullDateString =
-      fullDate.month + fullDate.date + fullDate.year.slice(2, 4);
+      fullDate.month + fullDate.date + fullDate.year.slice(3, 4);
     let ddmmyyFullDateString =
-      fullDate.date + fullDate.month + fullDate.year.slice(2, 4);
+      fullDate.date + fullDate.month + fullDate.year.slice(3, 4);
     let ddmmyyyyFullDateString = fullDate.date + fullDate.month + fullDate.year;
     let yyyymmddFullDateString = fullDate.year + fullDate.month + fullDate.date;
     let yymmddFullDateString =
-      fullDate.year.slice(2, 4) + fullDate.month + fullDate.date;
-    allFormatPalindromeCheck([
+      fullDate.year.slice(3, 4) + fullDate.month + fullDate.date;
+    return [
       mmddyyyyFullDateString,
       mmddyyFullDateString,
       ddmmyyFullDateString,
       ddmmyyyyFullDateString,
       yyyymmddFullDateString,
       yymmddFullDateString,
-    ]);
+    ];
   }
 
   function unoReverseMaker(normalString) {
@@ -52,19 +60,11 @@ function App() {
   function allFormatPalindromeCheck(allDateFormats) {
     let isPalindrome = false;
     allDateFormats.forEach((format) => {
-      console.log(format);
-      console.log(unoReverseMaker(format));
       if (format === unoReverseMaker(format)) {
         isPalindrome = true;
-        console.log(isPalindrome, "if");
       }
     });
-
-    if (isPalindrome === true) {
-      setOutputMessage(palindromeTrueMessage);
-    } else {
-      setOutputMessage(palindromeFalseMessage);
-    }
+    return isPalindrome;
   }
 
   return (
