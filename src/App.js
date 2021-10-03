@@ -10,7 +10,6 @@ function App() {
   const errorMessage = "You need to enter a date first to continue.";
   const palindromeTrueMessage = "Yay! Your birthday is a palindrome date.";
   const palindromeFalseMessage = "Nay! Your birthday is not a palindrome date.";
-  const dateOfBirthObj = dateStringToDateObject(dateOfBirth);
 
   function clickHandler() {
     dateStringToDateObject(dateOfBirth);
@@ -25,10 +24,17 @@ function App() {
         setOutputMessage(palindromeTrueMessage);
       } else {
         setOutputMessage(
-          `${palindromeFalseMessage} Closest palindrome date to your date of birth is ${findingClosestPalindromeDate(
-            findingPreviousPalindromeDate(dateOfBirth),
-            findingNextPalindromeDate(dateOfBirth)
-          )}.`
+          `${palindromeFalseMessage} Closest palindrome date to your date of birth is ${
+            findingClosestPalindromeDate(
+              findingPreviousPalindromeDate(dateOfBirth),
+              findingNextPalindromeDate(dateOfBirth)
+            )[0]
+          }. You missed it by ${
+            findingClosestPalindromeDate(
+              findingPreviousPalindromeDate(dateOfBirth),
+              findingNextPalindromeDate(dateOfBirth)
+            )[1]
+          } days. Totally not your fault tho.`
         );
       }
     }
@@ -89,6 +95,7 @@ function App() {
 
   function findingNextPalindromeDate(currentDate) {
     let currentFullDate = dateStringToDateObject(currentDate);
+    let dayCount = 0;
 
     let noOfDaysInMonthsInOrder = [
       31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31,
@@ -104,6 +111,7 @@ function App() {
       allFormatPalindromeCheck(allDateFormats(currentFullDate)) === false
     ) {
       currentFullDate.date++;
+      dayCount++;
       if (
         currentFullDate.date >
         noOfDaysInMonthsInOrder[currentFullDate.month - 1]
@@ -127,11 +135,12 @@ function App() {
         currentFullDate.date = currentFullDate.date.toString();
       }
     }
-    return currentFullDate;
+    return [currentFullDate, dayCount];
   }
 
   function findingPreviousPalindromeDate(currentDate) {
     let currentFullDate = dateStringToDateObject(currentDate);
+    let dayCount = 0;
 
     let noOfDaysInMonthsInOrder = [
       31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31,
@@ -147,6 +156,7 @@ function App() {
       allFormatPalindromeCheck(allDateFormats(currentFullDate)) === false
     ) {
       currentFullDate.date--;
+      dayCount++;
       if (currentFullDate.date === 0) {
         currentFullDate.month--;
         if (currentFullDate.month === 0) {
@@ -169,65 +179,31 @@ function App() {
         currentFullDate.date = currentFullDate.date.toString();
       }
     }
-    return currentFullDate;
+    return [currentFullDate, dayCount];
   }
 
   function findingClosestPalindromeDate(
     previousPalindromeDate,
     nextPalindromeDate
   ) {
-    let toReturnVal;
-    let previousPalindromeYearAndYearOfBirthDifference =
-      Number(dateOfBirthObj.year) - Number(previousPalindromeDate.year);
-    let nextPalindromeYearAndYearOfBirthDifference =
-      Number(dateOfBirthObj.year) - Number(nextPalindromeDate.year);
-    let previousPalindromeMonthAndMonthOfBirthDifference =
-      Number(dateOfBirthObj.month) - Number(previousPalindromeDate.month);
-    let nextPalindromeMonthAndMonthOfBirthDifference =
-      Number(dateOfBirthObj.month) - Number(nextPalindromeDate.month);
-    let previousPalindromeDateAndDateOfBirthDifference =
-      Number(dateOfBirthObj.date) - Number(previousPalindromeDate.date);
-    let nextPalindromeDateAndDateOfBirthDifference =
-      Number(dateOfBirthObj.date) - Number(nextPalindromeDate.date);
-    if (
-      Math.abs(previousPalindromeYearAndYearOfBirthDifference) >
-      Math.abs(nextPalindromeYearAndYearOfBirthDifference)
-    ) {
-      toReturnVal = nextPalindromeDate;
-    } else if (
-      Math.abs(nextPalindromeYearAndYearOfBirthDifference) >
-      Math.abs(previousPalindromeYearAndYearOfBirthDifference)
-    ) {
-      toReturnVal = previousPalindromeDate;
+    let closestPalindromeDate;
+    let closestPalindromeDayCount;
+    let previousPalindromeDateObj = previousPalindromeDate[0];
+    let previousPalindromeDateDayCount = previousPalindromeDate[1];
+    let nextPalindromeDateObj = nextPalindromeDate[0];
+    let nextPalindromeDateDayCount = nextPalindromeDate[1];
+    if (previousPalindromeDateDayCount > nextPalindromeDateDayCount) {
+      closestPalindromeDate = nextPalindromeDateObj;
+      closestPalindromeDayCount = nextPalindromeDateDayCount;
+    } else if (nextPalindromeDateDayCount > previousPalindromeDateDayCount) {
+      closestPalindromeDate = previousPalindromeDateObj;
+      closestPalindromeDayCount = previousPalindromeDateDayCount;
     } else {
-      if (
-        Math.abs(previousPalindromeMonthAndMonthOfBirthDifference) >
-        Math.abs(nextPalindromeMonthAndMonthOfBirthDifference)
-      ) {
-        toReturnVal = nextPalindromeDate;
-      } else if (
-        Math.abs(nextPalindromeMonthAndMonthOfBirthDifference) >
-        Math.abs(previousPalindromeMonthAndMonthOfBirthDifference)
-      ) {
-        toReturnVal = previousPalindromeDate;
-      } else {
-        if (
-          Math.abs(previousPalindromeDateAndDateOfBirthDifference) >
-          Math.abs(nextPalindromeDateAndDateOfBirthDifference)
-        ) {
-          toReturnVal = nextPalindromeDate;
-        } else if (
-          Math.abs(nextPalindromeDateAndDateOfBirthDifference) >
-          Math.abs(previousPalindromeDateAndDateOfBirthDifference)
-        ) {
-          toReturnVal = previousPalindromeDate;
-        } else {
-          toReturnVal = previousPalindromeDate;
-        }
-      }
+      closestPalindromeDate = previousPalindromeDateObj;
+      closestPalindromeDayCount = previousPalindromeDateDayCount;
     }
-    let closestPalindromeDateStr = `${toReturnVal.month}-${toReturnVal.date}-${toReturnVal.year}`;
-    return closestPalindromeDateStr;
+    let closestPalindromeDateStr = `${closestPalindromeDate.month}-${closestPalindromeDate.date}-${closestPalindromeDate.year}`;
+    return [closestPalindromeDateStr, closestPalindromeDayCount];
   }
 
   return (
