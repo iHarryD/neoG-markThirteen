@@ -1,8 +1,8 @@
 {
   "files": {
-    "main.css": "/neoG-markThirteen/static/css/main.1945f1af.chunk.css",
-    "main.js": "/neoG-markThirteen/static/js/main.75f5d5a1.chunk.js",
-    "main.js.map": "/neoG-markThirteen/static/js/main.75f5d5a1.chunk.js.map",
+    "main.css": "/neoG-markThirteen/static/css/main.ae257f11.chunk.css",
+    "main.js": "/neoG-markThirteen/static/js/main.0d753105.chunk.js",
+    "main.js.map": "/neoG-markThirteen/static/js/main.0d753105.chunk.js.map",
     "runtime-main.js": "/neoG-markThirteen/static/js/runtime-main.0328d5af.js",
     "runtime-main.js.map": "/neoG-markThirteen/static/js/runtime-main.0328d5af.js.map",
     "static/js/2.ffdbfc1e.chunk.js": "/neoG-markThirteen/static/js/2.ffdbfc1e.chunk.js",
@@ -10,13 +10,13 @@
     "static/js/3.88593b39.chunk.js": "/neoG-markThirteen/static/js/3.88593b39.chunk.js",
     "static/js/3.88593b39.chunk.js.map": "/neoG-markThirteen/static/js/3.88593b39.chunk.js.map",
     "index.html": "/neoG-markThirteen/index.html",
-    "static/css/main.1945f1af.chunk.css.map": "/neoG-markThirteen/static/css/main.1945f1af.chunk.css.map",
+    "static/css/main.ae257f11.chunk.css.map": "/neoG-markThirteen/static/css/main.ae257f11.chunk.css.map",
     "static/js/2.ffdbfc1e.chunk.js.LICENSE.txt": "/neoG-markThirteen/static/js/2.ffdbfc1e.chunk.js.LICENSE.txt"
   },
   "entrypoints": [
     "static/js/runtime-main.0328d5af.js",
     "static/js/2.ffdbfc1e.chunk.js",
-    "static/css/main.1945f1af.chunk.css",
-    "static/js/main.75f5d5a1.chunk.js"
+    "static/css/main.ae257f11.chunk.css",
+    "static/js/main.0d753105.chunk.js"
   ]
 }
